@@ -27,7 +27,7 @@ visualizer = KElbowVisualizer(model, k=(1,10)).fit(df.values)
 visualizer.show()
 
 # Silhouette method to find the appropriate number of clusters
-range_n_clusters = list (range(3,7))
+range_n_clusters = list (range(3,6))
 silhouette_scores = []
 for n_clusters in range_n_clusters:
     kmeans = KMeans(n_clusters=n_clusters)
@@ -67,15 +67,15 @@ df = df.sort_values("cluster")
 
 # Defining rename schema
 cnames = {"0": "Unsuccessful", "1": "Successful", "2": "Average"}
-df["Cluster names"] = [cnames[str(i)] for i in df.cluster]
+df["Degree"] = [cnames[str(i)] for i in df.cluster]
 
 # Plot to verify order
-sns.scatterplot(data=df, x="CorrectAnswer", y="AnswerTime", hue=df["Cluster names"])
+sns.scatterplot(data=df, x="CorrectAnswer", y="AnswerTime", hue=df["Degree"])
 plt.scatter(kmeans.cluster_centers_[:,0], kmeans.cluster_centers_[:,1],marker="X", c="r", s=80, label="centroids")
 plt.show()
 
 # Save dataframe as CSV
-df.to_csv("myoutput.csv")
+df.to_csv("LabeledData.csv")
 
 # # predicted class for a given value
 # predicted_class = kmeans.predict([[100, 100]])
